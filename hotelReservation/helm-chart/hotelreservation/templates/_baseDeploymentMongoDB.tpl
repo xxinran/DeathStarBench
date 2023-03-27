@@ -3,18 +3,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: {{ .Values.name }}
-  name: {{ .Values.name }}
+    service: {{ .Values.name }}-{{ .Release.Name }}
+  name: {{ .Values.name }}-{{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicas | default .Values.global.replicas }}
   selector:
     matchLabels:
-      service: {{ .Values.name }}
+      service: {{ .Values.name }}-{{ .Release.Name }}
   template:
     metadata:
       labels:
-        service: {{ .Values.name }}
-        app: {{ .Values.name }}
+        service: {{ .Values.name }}-{{ .Release.Name }}
+        app: {{ .Values.name }}-{{ .Release.Name }}
     spec:
       containers:
       {{- with .Values.container }}
@@ -45,13 +45,13 @@ spec:
 	{{- if $.Values.global.mongodb.persistentVolume.hostPath.enabled }}
         volumeMounts:
         - mountPath: /data/db
-          name: {{ $.Values.name }}-path
+          name: {{ $.Values.name }}-{{ $.Release.Name }}-path
         {{- end }}
       {{- end }}
       volumes:
-      - name: {{ .Values.name }}-path
+      - name: {{ .Values.name }}-{{ .Release.Name }}-path
         persistentVolumeClaim:
-          claimName: {{ .Values.name }}-pvc
+          claimName: {{ .Values.name }}-{{ .Release.Name }}-pvc
       {{- if hasKey .Values "topologySpreadConstraints" }}
       topologySpreadConstraints:
         {{ tpl .Values.topologySpreadConstraints . | nindent 6 | trim }}

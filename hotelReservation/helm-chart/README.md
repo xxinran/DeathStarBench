@@ -61,7 +61,7 @@ helm install RELEASE_NAME HELM_CHART_REPO_PATH \
     whenUnsatisfiable: DoNotSchedule
     labelSelector:
       matchLabels:
-        service: {{ .Values.name }}"
+        service: {{ .Values.name }}-{{ .Release.Name }}"
 ```
 
 #### Unique spread constrains for frontend ####

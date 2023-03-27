@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Values.name }}-pv
+  name: {{ .Values.name}}-{{ .Release.Name }}-pv
   labels:
-    app-name: {{ .Values.name }}
+    app-name: {{ .Values.name }}-{{ .Release.Name }}
 spec:
   volumeMode: Filesystem
   accessModes:
@@ -13,7 +13,7 @@ spec:
   capacity:
     storage: {{ .Values.global.mongodb.persistentVolume.size }}
   hostPath:
-    path: {{ .Values.global.mongodb.persistentVolume.hostPath.path }}/{{ .Values.name }}-pv
+    path: {{ .Values.global.mongodb.persistentVolume.hostPath.path }}/{{ .Values.name }}-{{ .Release.Name }}pv
     type: DirectoryOrCreate
 {{- end }}
 {{- end }}

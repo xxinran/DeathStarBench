@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.name }}
+  name: {{ .Values.name }}-{{ .Release.Name }}
 spec:
   type: {{ .Values.serviceType | default .Values.global.serviceType }}
   ports:
@@ -15,5 +15,5 @@ spec:
     targetPort: {{ .targetPort }}
   {{- end }}
   selector:
-    service: {{ .Values.name }}
+    service: {{ .Values.name }}-{{ .Release.Name }}
 {{- end }}

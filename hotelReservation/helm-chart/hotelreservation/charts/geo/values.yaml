@@ -1,5 +1,4 @@
 name: geo
-
 ports:
   - port: 8083
     targetPort: 8083

@@ -3,18 +3,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: {{ .Values.name }}
-  name: {{ .Values.name }}
+    service: {{ .Values.name }}-{{ .Release.Name }}
+  name: {{ .Values.name }}-{{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicas | default .Values.global.replicas }}
   selector:
     matchLabels:
-      service: {{ .Values.name }}
+      service: {{ .Values.name }}-{{ .Release.Name }}
   template:
     metadata:
       labels:
-        service: {{ .Values.name }}
-        app: {{ .Values.name }}
+        service: {{ .Values.name }}-{{ .Release.Name }}
+        app: {{ .Values.name }}-{{ .Release.Name }}
     spec:
       containers:
       {{- with .Values.container }}
@@ -54,7 +54,7 @@ spec:
         {{- if $.Values.configMaps }}        
         volumeMounts: 
         {{- range $configMap := $.Values.configMaps }}
-        - name: {{ $.Values.name }}-config
+        - name: {{ $.Values.name }}-{{ $.Release.Name }}-config
           mountPath: {{ $configMap.mountPath }}
           subPath: {{ $configMap.name }}
         {{- end }}
@@ -62,9 +62,9 @@ spec:
       {{- end -}}
       {{- if $.Values.configMaps }}
       volumes:
-      - name: {{ $.Values.name }}-config
+      - name: {{ $.Values.name }}-{{ $.Release.Name }}-config
         configMap:
-          name: {{ $.Values.name }}
+          name: {{ $.Values.name }}-{{ $.Release.Name }}
       {{- end }}
       {{- if hasKey .Values "topologySpreadConstraints" }}
       topologySpreadConstraints:

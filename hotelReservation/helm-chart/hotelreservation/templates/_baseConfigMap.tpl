@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.name }}
+  name: {{ .Values.name }}-{{ .Release.Name }}
   labels:
-    hotelreservation/service: {{ .Values.name }}
+    hotelreservation/service: {{ .Values.name }}-{{ .Release.Name }}
 data:
  {{- range $configMap := .Values.configMaps }}
   {{- $filePath := printf "configs/%s" $configMap.value }}
