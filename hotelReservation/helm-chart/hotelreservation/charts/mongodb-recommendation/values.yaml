@@ -7,8 +7,9 @@ ports:
     targetPort: 27017
  
 container:
+  dockerRegistry: registry.domain.local
   image: mongo
-  imageVersion: 5.0
+  imageVersion: cosigned
   name: hotel-reserv-recommendation-mongo
   ports:
   - containerPort: 27017

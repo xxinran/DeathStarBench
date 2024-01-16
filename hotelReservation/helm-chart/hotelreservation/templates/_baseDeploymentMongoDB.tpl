@@ -92,4 +92,8 @@ spec:
       {{- else if hasKey $.Values.global "nodeSelector" }}
       nodeSelector: {{- toYaml .Values.global.nodeSelector | nindent 8 }}
       {{- end }}
+      {{- if hasKey $.Values.global.mongodb "runtimeClassName" }}
+      runtimeClassName:
+        {{ tpl $.Values.global.mongodb.runtimeClassName . | nindent 6 | trim }}
+      {{- end }}
 {{- end}}

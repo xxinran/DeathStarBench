@@ -29,6 +29,7 @@ global:
       MEMCACHED_CACHE_SIZE: "128"
       MEMCACHED_THREADS: "2"
   mongodb:
+    runtimeClassName: kata-qemu-tdx
     persistentVolume:               # use hostPath or pvprovisioner
       enabled: false
       size: "1Gi"
